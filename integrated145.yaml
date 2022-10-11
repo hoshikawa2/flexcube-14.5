@@ -35,8 +35,7 @@ spec:
         image: gru.ocir.io/idvkxij5qkne/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22
         command: [ "/bin/sh", "-c"]
         args:
-#          [ "while true; do sleep 30; done;" ]
-         [ "sleep 180; su - gsh ; cd /; yum -y install wget; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/dX80UuetlAvWOEbvQNMBv47H3ZPR-zZHJJmTsu_GQ66icfgFaPSSu_97j8q3Fyrp/n/idcci5ks1puo/b/flexcubeBucketNewVersion/o/initializeConfig.sh; yum -y install unzip; sh initializeConfig.sh jdbc:oracle:thin:@152.67.45.88:1521/prodpdb.sub03290523020.arspvcn.oraclevcn.com {AES256}AgWyiXhc7aM112gNRUwBIWf5QpTpWMlI5NA2Ixtp37LrIfPWjCcmwNCsynBxxg99; while true; do sleep 30; done;" ]
+         [ "sleep 180; su - gsh ; cd /; yum -y install wget; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/dX80UuetlAvWOEbvQNMBv47H3ZPR-zZHJJmTsu_GQ66icfgFaPSSu_97j8q3Fyrp/n/idcci5ks1puo/b/flexcubeBucketNewVersion/o/initializeConfig.sh; yum -y install unzip; sh initializeConfig.sh jdbc:oracle:thin:@x.x.x.x:1521/prodpdb.sub0xxxxxxxxx0.arspvcn.oraclevcn.com {AES256}AgWyiXhc7aM112gNRUwBIWf5QpTpWMlI537LrIfPWjCcmwNCsynBxxg99; while true; do sleep 30; done;" ]
         ports:
         - name: port7001
           containerPort: 7001
