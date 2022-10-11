@@ -55,6 +55,8 @@ This step loads the Flexcube kernel inside the Fusion image. This bash script do
 
     flexcube.sh file:
     
+    yum install unzip -y
+    yum install wget -y
     su - gsh
     cd /
     wget https://objectstorage.ap-mumbai-1.oraclecloud.com/p/XTl-V6bdphhbdUnf3hk0ut6xG247GcLrjqKxK8tN9TqL9w3QeYCanz2aKO1dz2Wu/n/ids3optpuczi/b/IB14.5/o/Integrated145/Product_Processor/kernel145_17Nov21.zip
