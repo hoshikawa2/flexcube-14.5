@@ -21,33 +21,33 @@ Attention for the CPU and Memory pre-requisites:
     5CPUs
     40Gb RAM
 #
-Execute the YAML integrated144.yaml to start a Flexcube Weblogic instance on the cluster.
+Execute the YAML integrated145.yaml to start a Flexcube Weblogic instance on the cluster.
 If you want to clusterize your instances, you have to do it manually.
 #
     If you already have a Pod/Deployment:
 
-    kubectl delete deployment integrated144-deployment
+    kubectl delete deployment integrated145-deployment
    
     ------
   
     Or if you want to create a new Deployment:
  
-    kubectl apply -f integrated144.yaml
+    kubectl apply -f integrated145.yaml
     
-    Remember: Change the JDBC parameters inside integrated144.yaml
+    Remember: Change the JDBC parameters inside integrated145.yaml
 
 ## Building Flexcube Docker Image
 
     You can build a customized image of Flexcube, but you can use this image on my repository:
         
-    iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
+    iad.ocir.io/id3kyspkytmr/flexcube/integrated145:v1
 
 
 Here I explain how to make your Flexcube base image in docker. 
 First, we need to use a Fusion Image.
 There is a Fusion image on my repository. Execute the docker run to start the process:
 
-    sudo docker run --name integrated144 -h "fcubs.oracle.com" -p 7001-7020:7001-7020 -it "iad.ocir.io/id3kyspkytmr/oraclefmw-infra_with_patch:12.2.1.4.0" /bin/bash
+    sudo docker run --name integrated145 -h "fcubs.oracle.com" -p 7001-7020:7001-7020 -it "iad.ocir.io/id3kyspkytmr/oraclefmw-infra_with_patch:12.2.1.4.0" /bin/bash
 
 ### flexcube.sh
 
@@ -57,27 +57,27 @@ This step loads the Flexcube kernel inside the Fusion image. This bash script do
     
     su - gsh
     cd /
-    wget "https://objectstorage.us-ashburn-1.oraclecloud.com/p/Y86rX7N3n5m39BuMsxkRY-uP5O1ha2ZVEOv-oazTmA6MDf0XNtki8gGymsvYvPEf/n/id3kyspkytmr/b/bucket_banco_conceito/o/kernel144_11Mar21.zip"
-    unzip -o kernel144_11Mar21.zip -d /
-    cd /scratch/gsh/kernel144/user_projects/domains/integrated/bin
+    wget "https://objectstorage.us-ashburn-1.oraclecloud.com/p/Y86rX7N3n5m39BuMsxkRY-uP5O1ha2ZVEOv-oazTmA6MDf0XNtki8gGymsvYvPEf/n/id3kyspkytmr/b/bucket_banco_conceito/o/kernel145_11Mar21.zip"
+    unzip -o kernel145_11Mar21.zip -d /
+    cd /scratch/gsh/kernel145/user_projects/domains/integrated/bin
 
 ### Merge Fusion Docker Image with Flexcube
 Now, we need to start the image to configure and finalize the Flexcube image:
 
     Execute docker image with:
-    sudo docker start integrated144    
+    sudo docker start integrated145    
 
 Then execute:
 
-    sudo docker cp flexcube.sh integrated144:/
+    sudo docker cp flexcube.sh integrated145:/
 
-    sudo docker exec integrated144 /bin/bash -c "sh /flexcube.sh"
+    sudo docker exec integrated145 /bin/bash -c "sh /flexcube.sh"
 
 Let's run the Weblogic Admin instance with:
 
-    sudo docker exec integrated144 /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/startNodeManager.sh &"
+    sudo docker exec integrated145 /bin/bash -c "sh /scratch/gsh/kernel145/user_projects/domains/integrated/bin/startNodeManager.sh &"
 
-    sudo docker exec integrated144 /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/startWebLogic.sh &"
+    sudo docker exec integrated145 /bin/bash -c "sh /scratch/gsh/kernel145/user_projects/domains/integrated/bin/startWebLogic.sh &"
     
 Go to Weblogic Admin Server and change machine-1 Listen Address:
 
@@ -99,18 +99,18 @@ Now, you need to configure the Listen Address:
 
 And for push the docker image to OCIR:
 
-    sudo docker stop integrated144
+    sudo docker stop integrated145
 
-    sudo docker commit integrated144 flexcube/integrated144:v1
-    sudo docker tag flexcube/integrated144:v1 iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
-    sudo docker push iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
+    sudo docker commit integrated145 flexcube/integrated145:v1
+    sudo docker tag flexcube/integrated145:v1 iad.ocir.io/id3kyspkytmr/flexcube/integrated145:v1
+    sudo docker push iad.ocir.io/id3kyspkytmr/flexcube/integrated145:v1
 
 The Flexcube team needs to build the image with:
 
     Fusion Middleware
     Flexcube (/scratch/gsh/...)
     
-    Remember the URL of your new Flexcube image and update the YAML file named integrated144.yaml and integrated144-devops.yaml files. IT'S IMPORTANT!!!!
+    Remember the URL of your new Flexcube image and update the YAML file named integrated145.yaml and integrated145-devops.yaml files. IT'S IMPORTANT!!!!
 
 ## Automating the deployment for OKE (DevOps)
 
@@ -120,7 +120,7 @@ First we need to get the database (a template backup of an Oracle Database for t
 
     cd /scratch/gsh/oracle/wlserver/server/bin
     .  ./setWLSEnv.sh
-    java -Dweblogic.RootDirectory=/scratch/gsh/kernel144/user_projects/domains/integrated  weblogic.security.Encrypt <Database Password>
+    java -Dweblogic.RootDirectory=/scratch/gsh/kernel145/user_projects/domains/integrated  weblogic.security.Encrypt <Database Password>
 
 #### Environment Variables
 
@@ -144,12 +144,12 @@ This is the DevOps shell script to prepare a Flexcube Image and make it work for
     # Set Variables
     export JDBCString=$JDBCString
     export JDBCPassword=$JDBCPassword
-    # setup the JDBC variables in integrated144-devops.yaml
-    sed -i "s~--JDBCString--~$JDBCString~g" integrated144-devops.yaml
-    sed -i "s~--JDBCPassword--~$JDBCPassword~g" integrated144-devops.yaml
-    # Deploy integrated144
+    # setup the JDBC variables in integrated145-devops.yaml
+    sed -i "s~--JDBCString--~$JDBCString~g" integrated145-devops.yaml
+    sed -i "s~--JDBCPassword--~$JDBCPassword~g" integrated145-devops.yaml
+    # Deploy integrated145
     kubectl config view
-    kubectl replace -f integrated144-devops.yaml --force
+    kubectl replace -f integrated145-devops.yaml --force
 
 # 
 
@@ -171,30 +171,30 @@ This is the file responsible for deploy your Flexcube image into Kubernetes Clus
 The configuration file replaces the $JDBCString and $JDBCPassword environment variables before execution. The scripts inside this projects will configure your Weblogic instance with all parameters.
 
 
-    Deployment YAML (integrated144-devops.yaml)
+    Deployment YAML (integrated145-devops.yaml)
 
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: integrated144-deployment
+      name: integrated145-deployment
     spec:
       replicas: 1
       selector:
         matchLabels:
-          app: integrated144
+          app: integrated145
       template:
         metadata:
           labels:
-            app: integrated144
+            app: integrated145
         spec:
-          hostname: integrated144
+          hostname: integrated145
           hostAliases:
           - ip: "127.0.0.1"
             hostnames:
             - "fcubs.oracle.com"
           containers:
-          - name: integrated144
-            image: iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
+          - name: integrated145
+            image: iad.ocir.io/id3kyspkytmr/flexcube/integrated145:v1
             env:
             - name: JDBCSTRING
               value: "--JDBCString--"
@@ -269,12 +269,12 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
     apiVersion: v1
     kind: Service
     metadata:
-      name: integrated144-service
+      name: integrated145-service
       labels:
-        app: integrated144
+        app: integrated145
     spec:
       selector:
-        app: integrated144
+        app: integrated145
       ports:
         - port: 7004
           targetPort: 7004
@@ -283,12 +283,12 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
     apiVersion: v1
     kind: Service
     metadata:
-      name: integrated144-service-weblogic
+      name: integrated145-service-weblogic
       labels:
-        app: integrated144
+        app: integrated145
     spec:
       selector:
-        app: integrated144
+        app: integrated145
       ports:
         - port: 7001
           targetPort: 7001
@@ -297,12 +297,12 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
     apiVersion: v1
     kind: Service
     metadata:
-      name: integrated144-webservices
+      name: integrated145-webservices
       labels:
-        app: integrated144
+        app: integrated145
     spec:
       selector:
-        app: integrated144
+        app: integrated145
       ports:
         - port: 7005
           targetPort: 7005
@@ -313,22 +313,22 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
 
 #### Resilience
 
-The Flexcube deployment is resilient, so if the Weblogic or Flexcube falls down, the Kubernetes Cluster will load and execute again. The responsible for this is the **livenessprobe** inside the **integrated144-devops.yaml** file.
+The Flexcube deployment is resilient, so if the Weblogic or Flexcube falls down, the Kubernetes Cluster will load and execute again. The responsible for this is the **livenessprobe** inside the **integrated145-devops.yaml** file.
 
 ### Manage the Weblogic manually
 If you want to start or stop WebLogic, you can execute these commands. 
 
 #### Execute WebLogic
 
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/startNodeManager.sh &"
+    kubectl exec $(kubectl get pod -l app=integrated145 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel145/user_projects/domains/integrated/bin/startNodeManager.sh &"
 
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/startWebLogic.sh &"
+    kubectl exec $(kubectl get pod -l app=integrated145 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel145/user_projects/domains/integrated/bin/startWebLogic.sh &"
 
 #### Stop WebLogic
 
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/stopNodeManager.sh &"
+    kubectl exec $(kubectl get pod -l app=integrated145 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel145/user_projects/domains/integrated/bin/stopNodeManager.sh &"
 
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/stopWebLogic.sh &"
+    kubectl exec $(kubectl get pod -l app=integrated145 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel145/user_projects/domains/integrated/bin/stopWebLogic.sh &"
 
 
 ### The scripts inside this project
@@ -385,7 +385,7 @@ These scripts change the configuration of all JDBC XML files inside the Weblogic
     save()
     activate()
 #
-    Important: The JDBC configuration files for the Flexcube is on /scratch/gsh/kernel144/user_projects/domains/integrated/config/jdbc
+    Important: The JDBC configuration files for the Flexcube is on /scratch/gsh/kernel145/user_projects/domains/integrated/config/jdbc
 
 #
 
@@ -406,8 +406,8 @@ These scripts change the configuration of all JDBC XML files inside the Weblogic
     while read line; do
     # reading each line
     echo $line
-    sed -i 's/<url>jdbc:oracle:thin:@whf00fxh.in.oracle.com:1521\/prodpdb<\/url>/<url>$JDBCString<\/url>/' /scratch/gsh/kernel144/user_projects/domains/integrated/config/jdbc/$line
-    sed -i 's/<password-encrypted><\/password-encrypted>/<password-encrypted>$JDBCPassword<\/password-encrypted>/' /scratch/gsh/kernel144/user_projects/domains/integrated/config/jdbc/$line
+    sed -i 's/<url>jdbc:oracle:thin:@whf00fxh.in.oracle.com:1521\/prodpdb<\/url>/<url>$JDBCString<\/url>/' /scratch/gsh/kernel145/user_projects/domains/integrated/config/jdbc/$line
+    sed -i 's/<password-encrypted><\/password-encrypted>/<password-encrypted>$JDBCPassword<\/password-encrypted>/' /scratch/gsh/kernel145/user_projects/domains/integrated/config/jdbc/$line
     done < $filename
 
 #
@@ -424,7 +424,7 @@ These scripts change the configuration of all JDBC XML files inside the Weblogic
     jdbc2ffcjdevDSSMS-8814-jdbc.xml
     jdbc2ffcjdevDS_GTXN-7273-jdbc.xml
     jdbc2ffcjsmsDS-7727-jdbc.xml
-    jdbc2fINT144_integrated144-0549-jdbc.xml
+    jdbc2fINT145_integrated145-0549-jdbc.xml
     jdbc2ffcjSchedulerDS-6833-jdbc.xml
     jdbc2ffcjdevDSSMS_XA-5306-jdbc.xml
     jdbc2ffcjdevDS_XA-0669-jdbc.xml
@@ -440,9 +440,9 @@ These scripts start the Weblogic Admin, Node Manager and the application (Flexcu
 
     cd /
     su - gsh
-    cd /scratch/gsh/kernel144/user_projects/domains/integrated/bin
-    sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/startNodeManager.sh &
-    sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/startWebLogic.sh &
+    cd /scratch/gsh/kernel145/user_projects/domains/integrated/bin
+    sh /scratch/gsh/kernel145/user_projects/domains/integrated/bin/startNodeManager.sh &
+    sh /scratch/gsh/kernel145/user_projects/domains/integrated/bin/startWebLogic.sh &
 
 #
 
