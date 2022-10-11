@@ -135,7 +135,7 @@ metadata:
   annotations:
     service.beta.kubernetes.io/oci-load-balancer-internal: "true"
     service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
-    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
+    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432x25fhmzjyrza"
 spec:
   selector:
     app: integrated145
@@ -153,7 +153,7 @@ metadata:
   annotations:
     service.beta.kubernetes.io/oci-load-balancer-internal: "true"
     service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
-    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
+    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432e7lw25fhmzjyrza"
 spec:
   selector:
     app: integrated145
@@ -171,7 +171,7 @@ metadata:
   annotations:
     service.beta.kubernetes.io/oci-load-balancer-internal: "true"
     service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
-    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
+    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig4xie7lw25fhmzjyrza"
 spec:
   selector:
     app: integrated145
