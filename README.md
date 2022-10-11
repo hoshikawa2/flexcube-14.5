@@ -174,6 +174,19 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
 
     Deployment YAML (integrated145-devops.yaml)
 
+    ---
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: flexcubeclaim
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: oci
+      resources:
+        requests:
+          storage: 500Gi
+    ---
     apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -195,15 +208,10 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
             - "fcubs.oracle.com"
           containers:
           - name: integrated145
-            image: iad.ocir.io/id3kyspkytmr/flexcube/integrated145:v1
-            env:
-            - name: JDBCSTRING
-              value: "--JDBCString--"
-            - name: JDBCPASSWORD
-              value: "--JDBCPassword--"
+            image: gru.ocir.io/idvkxij5qkne/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22
             command: [ "/bin/sh", "-c"]
             args:
-              [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh $(JDBCSTRING) $(JDBCPASSWORD); while true; do sleep 30; done;" ]
+              [ "sleep 180; su - gsh ; cd /; yum -y install wget; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/dX80UuetlAvWOEbvQNMBv47H3ZPR-zZHJJmTsu_GQ66icfgFaPSSu_97j8q3Fyrp/n/idcci5ks1puo/b/flexcubeBucketNewVersion/o/initializeConfig.sh; yum -y install unzip; sh initializeConfig.sh $(JDBCSTRING) $(JDBCPASSWORD); while true; do sleep 30; done;" ]
             ports:
             - name: port7001
               containerPort: 7001
@@ -247,24 +255,33 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
               containerPort: 7020
             - name: port5556
               containerPort: 5556
-            livenessProbe:
-              httpGet:
-                path: /console
-                port: 7001
-              initialDelaySeconds: 3000
-              timeoutSeconds: 30
-              periodSeconds: 300
-              failureThreshold: 3
+    #        livenessProbe:
+    #          httpGet:
+    #            path: /console
+    #            port: 7001
+    #          initialDelaySeconds: 3000
+    #          timeoutSeconds: 30
+    #          periodSeconds: 300
+    #          failureThreshold: 3
+            volumeMounts:
+              - name: data
+                mountPath: /scratch/gsh/kernel145
+                readOnly: false
             resources:
               requests:
                 cpu: "5"
-                memory: "40Gi"
+                memory: "36Gi"
+                #ephemeral-storage: "500Gi"
               limits:
-                cpu: "5"
-                memory: "40Gi"
-          restartPolicy: Always
+                cpu: "8"
+                memory: "64Gi"
+                #ephemeral-storage: "500Gi"
+    #      restartPolicy: Always
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: flexcubeclaim
           imagePullSecrets:
-          # enter the name of the secret you created
           - name: ocirsecret
     ---
     apiVersion: v1
@@ -273,6 +290,10 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
       name: integrated145-service
       labels:
         app: integrated145
+      annotations:
+        service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+        service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
     spec:
       selector:
         app: integrated145
@@ -287,6 +308,10 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
       name: integrated145-service-weblogic
       labels:
         app: integrated145
+      annotations:
+        service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+        service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
     spec:
       selector:
         app: integrated145
@@ -301,6 +326,10 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
       name: integrated145-webservices
       labels:
         app: integrated145
+      annotations:
+        service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+        service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
     spec:
       selector:
         app: integrated145
@@ -308,6 +337,25 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
         - port: 7005
           targetPort: 7005
       type: LoadBalancer
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: integrated145-webservices2
+      labels:
+        app: integrated145
+      annotations:
+        service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+        service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
+    spec:
+      selector:
+        app: integrated145
+      ports:
+        - port: 7009
+          targetPort: 7009
+      type: LoadBalancer
+
 
 
 
