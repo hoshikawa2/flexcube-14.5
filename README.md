@@ -295,7 +295,7 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
       annotations:
         service.beta.kubernetes.io/oci-load-balancer-internal: "true"
         service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
-        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
+        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig43xie7lw25fhmzjyrza"
     spec:
       selector:
         app: integrated145
@@ -313,7 +313,7 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
       annotations:
         service.beta.kubernetes.io/oci-load-balancer-internal: "true"
         service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
-        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
+        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432x7lw25fhmzjyrza"
     spec:
       selector:
         app: integrated145
@@ -331,7 +331,7 @@ The configuration file replaces the $JDBCString and $JDBCPassword environment va
       annotations:
         service.beta.kubernetes.io/oci-load-balancer-internal: "true"
         service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
-        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
+        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrie7lw25fhmzjyrza"
     spec:
       selector:
         app: integrated145
