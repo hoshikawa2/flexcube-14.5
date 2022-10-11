@@ -1,6 +1,7 @@
 su - gsh
 cd /
-wget "https://objectstorage.us-ashburn-1.oraclecloud.com/p/Y86rX7N3n5m39BuMsxkRY-uP5O1ha2ZVEOv-oazTmA6MDf0XNtki8gGymsvYvPEf/n/id3kyspkytmr/b/bucket_banco_conceito/o/kernel144_11Mar21.zip"
-unzip -o kernel144_11Mar21.zip -d /
-cd /scratch/gsh/kernel144/user_projects/domains/integrated/bin
+#wget "https://objectstorage.ap-mumbai-1.oraclecloud.com/p/x_jm7V8SukeVvV0Jeh-Pf3u_B_bWtcyn1nZ1CDcwaGLngSi4o-eUtdNtV4joKFK2/n/ids3optpuczi/b/14.5Deployment/o/kernel145_17Nov21.zip"
+wget https://objectstorage.ap-mumbai-1.oraclecloud.com/p/XTl-V6bdphhbdUnf3hk0ut6xG247GcLrjqKxK8tN9TqL9w3QeYCanz2aKO1dz2Wu/n/ids3optpuczi/b/IB14.5/o/Integrated145/Product_Processor/kernel145_17Nov21.zip
+unzip -o kernel145_17Nov21.zip -d /
+cd /scratch/gsh/kernel145/user_projects/domains/integrated/bin
 
