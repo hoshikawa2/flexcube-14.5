@@ -14,29 +14,29 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: integrated144-deployment
+  name: integrated145-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: integrated144
+      app: integrated145
   template:
     metadata:
       labels:
-        app: integrated144
+        app: integrated145
     spec:
-      hostname: integrated144
+      hostname: integrated145
       hostAliases:
       - ip: "127.0.0.1"
         hostnames:
         - "fcubs.oracle.com"
       containers:
-      - name: integrated144
-        image: iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
+      - name: integrated145
+        image: bom.ocir.io/ids3optpuczi/banking:oraclefmw-infra_jdk8u281_12.2.1.4.0
         command: [ "/bin/sh", "-c"]
         args:
 #          [ "while true; do sleep 30; done;" ]
-         [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh jdbc:oracle:thin:@0.0.0.0:1521/DB0401_iad15g.subnet000000005.vcn000000815.oraclevcn.com {AES256}7kfaltdnxxxxxxxxxxxxxxxxOynq1ee8Ib8=; while true; do sleep 30; done;" ]
+         [ "sleep 180; su - gsh ; cd /; yum -y install wget; wget https://objectstorage.ap-mumbai-1.oraclecloud.com/p/7xGohmcCQ0F055XmQA5ly-SjQFuXxiEs8yiFCv7fYEeV6exQXQGcKmgZxQqpRytK/n/ids3optpuczi/b/14.5Deployment/o/initializeConfig.sh; yum -y install unzip; sh initializeConfig.sh jdbc:oracle:thin:@ibcommon.gshbankingpvtsu.gshvcn.oraclevcn.com:1521/prodpdb.gshbankingpvtsu.gshvcn.oraclevcn.com {AES256}cRQfGMTDoFTGsHSMEqDkPB/7AGDZMipzPubrx1q6L08I6ojTZ3POMd9l2oriK8q/; while true; do sleep 30; done;" ]
         ports:
         - name: port7001
           containerPort: 7001
@@ -96,11 +96,11 @@ spec:
           requests:
             cpu: "5"
             memory: "36Gi"
-            ephemeral-storage: "500Gi"
+            #ephemeral-storage: "500Gi"
           limits:
             cpu: "5"
             memory: "36Gi"
-            ephemeral-storage: "500Gi"
+            #ephemeral-storage: "500Gi"
 #      restartPolicy: Always
       volumes:
         - name: data
@@ -112,12 +112,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: integrated144-service
+  name: integrated145-service
   labels:
-    app: integrated144
+    app: integrated145
 spec:
   selector:
-    app: integrated144
+    app: integrated145
   ports:
     - port: 7004
       targetPort: 7004
@@ -126,12 +126,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: integrated144-service-weblogic
+  name: integrated145-service-weblogic
   labels:
-    app: integrated144
+    app: integrated145
 spec:
   selector:
-    app: integrated144
+    app: integrated145
   ports:
     - port: 7001
       targetPort: 7001
@@ -140,12 +140,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: integrated144-webservices
+  name: integrated145-webservices
   labels:
-    app: integrated144
+    app: integrated145
 spec:
   selector:
-    app: integrated144
+    app: integrated145
   ports:
     - port: 7005
       targetPort: 7005
@@ -154,12 +154,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: integrated144-webservices2
+  name: integrated145-webservices2
   labels:
-    app: integrated144
+    app: integrated145
 spec:
   selector:
-    app: integrated144
+    app: integrated145
   ports:
     - port: 7009
       targetPort: 7009
