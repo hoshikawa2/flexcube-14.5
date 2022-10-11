@@ -32,11 +32,7 @@ spec:
         - "fcubs.oracle.com"
       containers:
       - name: integrated145
-        #image: bom.ocir.io/ids3optpuczi/banking:oraclefmw-infra_jdk8u281_12.2.1.4.0
-        #image: iad.ocir.io/ids3optpuczi/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22
-        #image: gru.ocir.io/idvkxij5qkne/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22
-        #image: bom.ocir.io/ids3optpuczi/wls_gsh:14.1.1.0.0_pt34084007_apr22
-        image: bom.ocir.io/ids3optpuczi/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22
+        image: gru.ocir.io/idvkxij5qkne/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22
         command: [ "/bin/sh", "-c"]
         args:
 #          [ "while true; do sleep 30; done;" ]

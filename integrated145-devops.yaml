@@ -32,11 +32,11 @@ spec:
         - "fcubs.oracle.com"
       containers:
       - name: integrated145
-        image: bom.ocir.io/ids3optpuczi/banking:oraclefmw-infra_jdk8u281_12.2.1.4.0
+        image: gru.ocir.io/idvkxij5qkne/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22
         command: [ "/bin/sh", "-c"]
         args:
 #          [ "while true; do sleep 30; done;" ]
-         [ "sleep 180; su - gsh ; cd /; yum -y install wget; wget https://objectstorage.ap-mumbai-1.oraclecloud.com/p/7xGohmcCQ0F055XmQA5ly-SjQFuXxiEs8yiFCv7fYEeV6exQXQGcKmgZxQqpRytK/n/ids3optpuczi/b/14.5Deployment/o/initializeConfig.sh; yum -y install unzip; sh initializeConfig.sh jdbc:oracle:thin:@ibcommon.gshbankingpvtsu.gshvcn.oraclevcn.com:1521/prodpdb.gshbankingpvtsu.gshvcn.oraclevcn.com {AES256}cRQfGMTDoFTGsHSMEqDkPB/7AGDZMipzPubrx1q6L08I6ojTZ3POMd9l2oriK8q/; while true; do sleep 30; done;" ]
+          [ "sleep 180; su - gsh ; cd /; yum -y install wget; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/dX80UuetlAvWOEbvQNMBv47H3ZPR-zZHJJmTsu_GQ66icfgFaPSSu_97j8q3Fyrp/n/idcci5ks1puo/b/flexcubeBucketNewVersion/o/initializeConfig.sh; yum -y install unzip; sh initializeConfig.sh $(JDBCSTRING) $(JDBCPASSWORD); while true; do sleep 30; done;" ]
         ports:
         - name: port7001
           containerPort: 7001
@@ -90,7 +90,7 @@ spec:
 #          failureThreshold: 3
         volumeMounts:
           - name: data
-            mountPath: /tmp
+            mountPath: /scratch/gsh/kernel145
             readOnly: false
         resources:
           requests:
@@ -98,8 +98,8 @@ spec:
             memory: "36Gi"
             #ephemeral-storage: "500Gi"
           limits:
-            cpu: "5"
-            memory: "36Gi"
+            cpu: "8"
+            memory: "64Gi"
             #ephemeral-storage: "500Gi"
 #      restartPolicy: Always
       volumes:
@@ -115,6 +115,10 @@ metadata:
   name: integrated145-service
   labels:
     app: integrated145
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+    service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
 spec:
   selector:
     app: integrated145
@@ -129,6 +133,10 @@ metadata:
   name: integrated145-service-weblogic
   labels:
     app: integrated145
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+    service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
 spec:
   selector:
     app: integrated145
@@ -143,6 +151,10 @@ metadata:
   name: integrated145-webservices
   labels:
     app: integrated145
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+    service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
 spec:
   selector:
     app: integrated145
@@ -157,6 +169,10 @@ metadata:
   name: integrated145-webservices2
   labels:
     app: integrated145
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+    service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
 spec:
   selector:
     app: integrated145

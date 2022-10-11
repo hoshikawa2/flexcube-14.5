@@ -18,8 +18,8 @@ Layers for Containerization:
 This is the rapid way to deploy the Flexcube (fcubs) in your cluster.
 Attention for the CPU and Memory pre-requisites:
 
-    5CPUs
-    40Gb RAM
+    8 OCPUs
+    64Gb RAM
 #
 Execute the YAML integrated145.yaml to start a Flexcube Weblogic instance on the cluster.
 If you want to clusterize your instances, you have to do it manually.
@@ -40,14 +40,14 @@ If you want to clusterize your instances, you have to do it manually.
 
     You can build a customized image of Flexcube, but you can use this image on my repository:
         
-    iad.ocir.io/id3kyspkytmr/flexcube/integrated145:v1
+    gru.ocir.io/idvkxij5qkne/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22
 
 
 Here I explain how to make your Flexcube base image in docker. 
 First, we need to use a Fusion Image.
 There is a Fusion image on my repository. Execute the docker run to start the process:
 
-    sudo docker run --name integrated145 -h "fcubs.oracle.com" -p 7001-7020:7001-7020 -it "iad.ocir.io/id3kyspkytmr/oraclefmw-infra_with_patch:12.2.1.4.0" /bin/bash
+    sudo docker run --name integrated145 -h "fcubs.oracle.com" -p 7001-7020:7001-7020 -it "gru.ocir.io/idvkxij5qkne/oraclefmw-infra:12.2.1.4.0_jdk8u281_pt34080315_apr22" /bin/bash
 
 ### flexcube.sh
 
@@ -57,9 +57,10 @@ This step loads the Flexcube kernel inside the Fusion image. This bash script do
     
     su - gsh
     cd /
-    wget "https://objectstorage.us-ashburn-1.oraclecloud.com/p/Y86rX7N3n5m39BuMsxkRY-uP5O1ha2ZVEOv-oazTmA6MDf0XNtki8gGymsvYvPEf/n/id3kyspkytmr/b/bucket_banco_conceito/o/kernel145_11Mar21.zip"
-    unzip -o kernel145_11Mar21.zip -d /
+    wget https://objectstorage.ap-mumbai-1.oraclecloud.com/p/XTl-V6bdphhbdUnf3hk0ut6xG247GcLrjqKxK8tN9TqL9w3QeYCanz2aKO1dz2Wu/n/ids3optpuczi/b/IB14.5/o/Integrated145/Product_Processor/kernel145_17Nov21.zip
+    unzip -o kernel145_17Nov21.zip -d /
     cd /scratch/gsh/kernel145/user_projects/domains/integrated/bin
+
 
 ### Merge Fusion Docker Image with Flexcube
 Now, we need to start the image to configure and finalize the Flexcube image:
