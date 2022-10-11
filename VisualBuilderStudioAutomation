@@ -1,0 +1,16 @@
+#  Prepare for kubectl from OCI CLI
+mkdir -p $HOME/.kube
+oci ce cluster create-kubeconfig --cluster-id ocid1.cluster.oc1.iad.aaaaaaaaae3tmyldgbtgmyjrmyzdeytbhazdmmbrgfstmntdgc2wmzrxgbrt --file $HOME/.kube/config --region us-ashburn-1 --token-version 2.0.0
+export KUBECONFIG=$HOME/.kube/config
+# Deploy integrated144
+kubectl config view
+kubectl get nodes
+kubectl replace -f integrated144-devops.yaml --force
+kubectl rollout status deployment integrated144-deployment
+# Set Variables
+export JDBCString=$JDBCString
+export JDBCPassword=$JDBCPassword
+#Load initialize script 
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh"
+#Run Automated process to up Weblogic and Applications
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh initializeConfig.sh $JDBCString $JDBCPassword"

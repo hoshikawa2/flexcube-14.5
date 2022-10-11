@@ -1,0 +1,1023 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<domain xmlns="http://xmlns.oracle.com/weblogic/domain" xmlns:sec="http://xmlns.oracle.com/weblogic/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wls="http://xmlns.oracle.com/weblogic/security/wls" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/security/wls http://xmlns.oracle.com/weblogic/security/wls/1.0/wls.xsd http://xmlns.oracle.com/weblogic/domain http://xmlns.oracle.com/weblogic/1.0/domain.xsd http://xmlns.oracle.com/weblogic/security/xacml http://xmlns.oracle.com/weblogic/security/xacml/1.0/xacml.xsd http://xmlns.oracle.com/weblogic/security/providers/passwordvalidator http://xmlns.oracle.com/weblogic/security/providers/passwordvalidator/1.0/passwordvalidator.xsd http://xmlns.oracle.com/weblogic/security http://xmlns.oracle.com/weblogic/1.0/security.xsd">
+  <name>integrated</name>
+  <domain-version>12.2.1.4.0</domain-version>
+  <security-configuration>
+    <name>integrated</name>
+    <realm>
+      <sec:authentication-provider xsi:type="wls:default-authenticatorType">
+        <sec:name>DefaultAuthenticator</sec:name>
+      </sec:authentication-provider>
+      <sec:authentication-provider xsi:type="wls:default-identity-asserterType">
+        <sec:name>DefaultIdentityAsserter</sec:name>
+        <sec:active-type>AuthenticatedUser</sec:active-type>
+        <sec:active-type>weblogic-jwt-token</sec:active-type>
+      </sec:authentication-provider>
+      <sec:role-mapper xmlns:xac="http://xmlns.oracle.com/weblogic/security/xacml" xsi:type="xac:xacml-role-mapperType">
+        <sec:name>XACMLRoleMapper</sec:name>
+      </sec:role-mapper>
+      <sec:authorizer xmlns:xac="http://xmlns.oracle.com/weblogic/security/xacml" xsi:type="xac:xacml-authorizerType">
+        <sec:name>XACMLAuthorizer</sec:name>
+      </sec:authorizer>
+      <sec:adjudicator xsi:type="wls:default-adjudicatorType">
+        <sec:name>DefaultAdjudicator</sec:name>
+      </sec:adjudicator>
+      <sec:credential-mapper xsi:type="wls:default-credential-mapperType">
+        <sec:name>DefaultCredentialMapper</sec:name>
+      </sec:credential-mapper>
+      <sec:cert-path-provider xsi:type="wls:web-logic-cert-path-providerType">
+        <sec:name>WebLogicCertPathProvider</sec:name>
+      </sec:cert-path-provider>
+      <sec:cert-path-builder>WebLogicCertPathProvider</sec:cert-path-builder>
+      <sec:name>myrealm</sec:name>
+      <sec:password-validator xmlns:pas="http://xmlns.oracle.com/weblogic/security/providers/passwordvalidator" xsi:type="pas:system-password-validatorType">
+        <sec:name>SystemPasswordValidator</sec:name>
+        <pas:min-password-length>8</pas:min-password-length>
+        <pas:min-numeric-or-special-characters>1</pas:min-numeric-or-special-characters>
+      </sec:password-validator>
+    </realm>
+    <default-realm>myrealm</default-realm>
+    <credential-encrypted>{AES256}d7PnFtWU61nW/XGc3k6v67OVbgHox6C8iNthSszYi9arCn2YU4Ox2uJiq4BP3MGEzcR0uz/tBwAQ/dq5dnrstK2nNcG0xlKRF04I7zi8mayIwCGkaPVTCanSo0u+7W/Q</credential-encrypted>
+    <node-manager-username>weblogic</node-manager-username>
+    <node-manager-password-encrypted>{AES256}TO8y9fVDmFAdXKaz1OjThRfqJdY46kBNCBiu21aD8GQ=</node-manager-password-encrypted>
+  </security-configuration>
+  <jta>
+    <timeout-seconds>18000</timeout-seconds>
+    <abandon-timeout-seconds>86400</abandon-timeout-seconds>
+    <forget-heuristics>true</forget-heuristics>
+    <before-completion-iteration-limit>10</before-completion-iteration-limit>
+    <max-transactions>10000</max-transactions>
+    <max-unique-name-statistics>1000</max-unique-name-statistics>
+    <checkpoint-interval-seconds>300</checkpoint-interval-seconds>
+    <parallel-xa-enabled>true</parallel-xa-enabled>
+    <unregister-resource-grace-period>30</unregister-resource-grace-period>
+    <two-phase-enabled>true</two-phase-enabled>
+    <clusterwide-recovery-enabled>false</clusterwide-recovery-enabled>
+    <tightly-coupled-transactions-enabled>false</tightly-coupled-transactions-enabled>
+    <tlog-write-when-determiner-exists-enabled>false</tlog-write-when-determiner-exists-enabled>
+  </jta>
+  <server>
+    <name>AdminServer</name>
+    <machine>Machine-1</machine>
+    <listen-address></listen-address>
+    <server-life-cycle-timeout-val>30</server-life-cycle-timeout-val>
+    <startup-timeout>0</startup-timeout>
+  </server>
+  <server>
+    <name>integrated_server</name>
+    <reverse-dns-allowed>false</reverse-dns-allowed>
+    <native-io-enabled>true</native-io-enabled>
+    <ssl>
+      <enabled>true</enabled>
+      <hostname-verifier xsi:nil="true"></hostname-verifier>
+      <hostname-verification-ignored>true</hostname-verification-ignored>
+      <export-key-lifespan>500</export-key-lifespan>
+      <client-certificate-enforced>false</client-certificate-enforced>
+      <listen-port>7004</listen-port>
+      <login-timeout-millis>25000</login-timeout-millis>
+      <two-way-ssl-enabled>false</two-way-ssl-enabled>
+      <server-private-key-alias>fcubs.oracle.com</server-private-key-alias>
+      <server-private-key-pass-phrase-encrypted>{AES256}eoSBBGoKfNpwm/md4pHGjJKTlUR2r0F8sAQ27mrzjNc=</server-private-key-pass-phrase-encrypted>
+      <ssl-rejection-logging-enabled>true</ssl-rejection-logging-enabled>
+      <inbound-certificate-validation>BuiltinSSLValidationOnly</inbound-certificate-validation>
+      <outbound-certificate-validation>BuiltinSSLValidationOnly</outbound-certificate-validation>
+      <allow-unencrypted-null-cipher>false</allow-unencrypted-null-cipher>
+      <use-server-certs>false</use-server-certs>
+    </ssl>
+    <log>
+      <date-format-pattern>MMM d, yyyy h:mm:ss,SSS a z</date-format-pattern>
+      <file-name>logs/integrated_server.log</file-name>
+      <rotation-type>bySize</rotation-type>
+      <number-of-files-limited>true</number-of-files-limited>
+      <file-count>100</file-count>
+      <file-min-size>5000</file-min-size>
+      <rotate-log-on-startup>false</rotate-log-on-startup>
+      <buffer-size-kb>8</buffer-size-kb>
+      <logger-severity>Warning</logger-severity>
+      <log-file-severity>Warning</log-file-severity>
+      <stdout-severity>Critical</stdout-severity>
+      <stdout-format>standard</stdout-format>
+      <stdout-log-stack>true</stdout-log-stack>
+      <stacktrace-depth>5</stacktrace-depth>
+      <domain-log-broadcast-severity>Critical</domain-log-broadcast-severity>
+      <redirect-stdout-to-server-log-enabled>false</redirect-stdout-to-server-log-enabled>
+      <redirect-stderr-to-server-log-enabled>false</redirect-stderr-to-server-log-enabled>
+      <domain-log-broadcaster-buffer-size>10</domain-log-broadcaster-buffer-size>
+      <log-monitoring-enabled>true</log-monitoring-enabled>
+      <log-monitoring-interval-secs>30</log-monitoring-interval-secs>
+      <log-monitoring-throttle-threshold>1500</log-monitoring-throttle-threshold>
+      <log-monitoring-throttle-message-length>50</log-monitoring-throttle-message-length>
+      <log-monitoring-max-throttle-message-signature-count>1000</log-monitoring-max-throttle-message-signature-count>
+    </log>
+    <max-open-sock-count>-1</max-open-sock-count>
+    <stuck-thread-max-time>1800</stuck-thread-max-time>
+    <stuck-thread-timer-interval>60</stuck-thread-timer-interval>
+    <gathered-writes-enabled>false</gathered-writes-enabled>
+    <scattered-reads-enabled>false</scattered-reads-enabled>
+    <machine>Machine-1</machine>
+    <listen-port>7003</listen-port>
+    <listen-port-enabled>true</listen-port-enabled>
+    <cluster xsi:nil="true"></cluster>
+    <web-server>
+      <web-server-log>
+        <file-name>logs/access.log</file-name>
+        <rotation-type>bySize</rotation-type>
+        <number-of-files-limited>false</number-of-files-limited>
+        <file-count>100</file-count>
+        <file-min-size>5000</file-min-size>
+        <rotate-log-on-startup>false</rotate-log-on-startup>
+        <logging-enabled>false</logging-enabled>
+      </web-server-log>
+    </web-server>
+    <listen-address></listen-address>
+    <accept-backlog>300</accept-backlog>
+    <login-timeout-millis>5000</login-timeout-millis>
+    <java-compiler>javac</java-compiler>
+    <server-start>
+      <arguments>-Dserver.id=1 -Dorg.apache.xml.dtm.DTMManager=org.apache.xml.dtm.ref.DTMManagerDefault -Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XML11Configuration -Dweblogic.threadpool.MinPoolSize=100 -Dweblogic.threadpool.MaxPoolSize=500 -Xmx8192m -XX:MaxPermSize=1024m -server -d64 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/scratch/gsh/kernel144/debug/heapdump -XX:+UseParallelOldGC -XX:ParallelGCThreads=4 -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8458,server=y,suspend=n</arguments>
+    </server-start>
+    <client-cert-proxy-enabled>false</client-cert-proxy-enabled>
+    <key-stores>CustomIdentityAndJavaStandardTrust</key-stores>
+    <custom-identity-key-store-file-name>/scratch/gsh/kernel144/workarea/keystore/fcubs.jks</custom-identity-key-store-file-name>
+    <custom-identity-key-store-type>JKS</custom-identity-key-store-type>
+    <custom-identity-key-store-pass-phrase-encrypted>{AES256}1D/pbiqZKKcsylc5qTjYV9x4AkXK+TWp0q84gffOqKo=</custom-identity-key-store-pass-phrase-encrypted>
+    <java-standard-trust-key-store-pass-phrase-encrypted>{AES256}gxB5mOFcUECfSvCB4um8bt6SrPWSDwqI2ZACez5TKs0=</java-standard-trust-key-store-pass-phrase-encrypted>
+    <server-diagnostic-config>
+      <wldf-diagnostic-volume>Low</wldf-diagnostic-volume>
+    </server-diagnostic-config>
+  </server>
+  <server>
+    <name>gateway_server</name>
+    <ssl>
+      <enabled>true</enabled>
+      <listen-port>7006</listen-port>
+    </ssl>
+    <log>
+      <date-format-pattern>MMM d, yyyy h:mm:ss,SSS a z</date-format-pattern>
+      <file-name>logs/gateway_server.log</file-name>
+      <rotation-type>bySize</rotation-type>
+      <number-of-files-limited>true</number-of-files-limited>
+      <file-count>100</file-count>
+      <file-min-size>5000</file-min-size>
+      <rotate-log-on-startup>false</rotate-log-on-startup>
+      <buffer-size-kb>8</buffer-size-kb>
+      <logger-severity>Warning</logger-severity>
+      <log-file-severity>Warning</log-file-severity>
+      <stdout-severity>Critical</stdout-severity>
+      <stdout-format>standard</stdout-format>
+      <stdout-log-stack>true</stdout-log-stack>
+      <stacktrace-depth>5</stacktrace-depth>
+      <domain-log-broadcast-severity>Critical</domain-log-broadcast-severity>
+      <redirect-stdout-to-server-log-enabled>false</redirect-stdout-to-server-log-enabled>
+      <redirect-stderr-to-server-log-enabled>false</redirect-stderr-to-server-log-enabled>
+      <domain-log-broadcaster-buffer-size>10</domain-log-broadcaster-buffer-size>
+      <log-monitoring-enabled>true</log-monitoring-enabled>
+      <log-monitoring-interval-secs>30</log-monitoring-interval-secs>
+      <log-monitoring-throttle-threshold>1500</log-monitoring-throttle-threshold>
+      <log-monitoring-throttle-message-length>50</log-monitoring-throttle-message-length>
+      <log-monitoring-max-throttle-message-signature-count>1000</log-monitoring-max-throttle-message-signature-count>
+    </log>
+    <machine>Machine-1</machine>
+    <listen-port>7005</listen-port>
+    <listen-port-enabled>true</listen-port-enabled>
+    <cluster xsi:nil="true"></cluster>
+    <web-server>
+      <web-server-log>
+        <file-name>logs/access.log</file-name>
+        <rotation-type>bySize</rotation-type>
+        <number-of-files-limited>false</number-of-files-limited>
+        <file-count>100</file-count>
+        <file-min-size>5000</file-min-size>
+        <rotate-log-on-startup>false</rotate-log-on-startup>
+        <buffer-size-kb>8</buffer-size-kb>
+        <logging-enabled>false</logging-enabled>
+        <elf-fields>date time cs-method cs-uri sc-status</elf-fields>
+        <log-time-in-gmt>false</log-time-in-gmt>
+      </web-server-log>
+    </web-server>
+    <listen-address></listen-address>
+    <java-compiler>javac</java-compiler>
+    <server-start>
+      <arguments>-Xmx8g</arguments>
+    </server-start>
+    <client-cert-proxy-enabled>false</client-cert-proxy-enabled>
+    <server-diagnostic-config>
+      <wldf-diagnostic-volume>Low</wldf-diagnostic-volume>
+    </server-diagnostic-config>
+  </server>
+  <server>
+    <name>obpmserver</name>
+    <ssl>
+      <enabled>true</enabled>
+      <listen-port>7010</listen-port>
+    </ssl>
+    <machine>Machine-1</machine>
+    <listen-port>7008</listen-port>
+    <listen-port-enabled>true</listen-port-enabled>
+    <cluster xsi:nil="true"></cluster>
+    <web-server>
+      <web-server-log>
+        <number-of-files-limited>false</number-of-files-limited>
+      </web-server-log>
+    </web-server>
+    <listen-address></listen-address>
+    <java-compiler>javac</java-compiler>
+    <server-start>
+      <arguments>-Dorg.apache.xml.dtm.DTMManager=org.apache.xml.dtm.ref.DTMManagerDefault -Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XML11Configuration -Dweblogic.threadpool.MinPoolSize=100 -Dweblogic.threadpool.MaxPoolSize=100 -Xms4g -Xmx4g -XX:MaxPermSize=512m -server -d64 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/scratch/gsh/heapdump -XX:+UseParallelOldGC -XX:ParallelGCThreads=4 -Dserver.id=1</arguments>
+    </server-start>
+    <client-cert-proxy-enabled>false</client-cert-proxy-enabled>
+    <server-diagnostic-config>
+      <wldf-diagnostic-volume>Low</wldf-diagnostic-volume>
+    </server-diagnostic-config>
+  </server>
+  <server>
+    <name>rest_server</name>
+    <ssl>
+      <enabled>false</enabled>
+    </ssl>
+    <machine>Machine-1</machine>
+    <listen-port>7009</listen-port>
+    <listen-port-enabled>true</listen-port-enabled>
+    <cluster xsi:nil="true"></cluster>
+    <web-server>
+      <web-server-log>
+        <number-of-files-limited>false</number-of-files-limited>
+      </web-server-log>
+    </web-server>
+    <listen-address></listen-address>
+    <java-compiler>javac</java-compiler>
+    <client-cert-proxy-enabled>false</client-cert-proxy-enabled>
+    <server-diagnostic-config>
+      <wldf-diagnostic-volume>Low</wldf-diagnostic-volume>
+    </server-diagnostic-config>
+  </server>
+  <production-mode-enabled>true</production-mode-enabled>
+  <embedded-ldap>
+    <name>integrated</name>
+    <credential-encrypted>{AES256}KFyenyJGEX79b7aiO9CNeHFWnawVPjQ8ZiqZ/WhasWuoN3xQpZ1hEAaBm7g7+iJn</credential-encrypted>
+  </embedded-ldap>
+  <administration-port-enabled>false</administration-port-enabled>
+  <exalogic-optimizations-enabled>false</exalogic-optimizations-enabled>
+  <configuration-version>12.2.1.4.0</configuration-version>
+  <cluster-constraints-enabled>false</cluster-constraints-enabled>
+  <app-deployment>
+    <name>PaymentStubs_EAR_12.5</name>
+    <target>integrated_server,obpmserver</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/PaymentStubs_EAR_12.5.ear/app/PaymentStubs_EAR_12.5.ear</source-path>
+    <deployment-order>100</deployment-order>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>RAD#12.4.0.0.0</name>
+    <target>gateway_server</target>
+    <module-type>war</module-type>
+    <source-path>servers/AdminServer/upload/RAD.war/app/RAD.war</source-path>
+    <deployment-order>100</deployment-order>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBS</name>
+    <target>integrated_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBS/app/FCUBS.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>GWEJB</name>
+    <target>gateway_server,integrated_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/GWEJB/app/GWEJB.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>GWMDB</name>
+    <target>gateway_server,integrated_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/GWMDB/app/GWMDB.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>GWHTTP</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/GWHTTP/app/GWHTTP.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSAccFinService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSAccFinService/app/FCUBSAccFinService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSAccService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSAccService/app/FCUBSAccService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSBCService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSBCService/app/FCUBSBCService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCAService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCAService/app/FCUBSCAService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCcyService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCcyService/app/FCUBSCcyService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCFService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCFService/app/FCUBSCFService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCIService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCIService/app/FCUBSCIService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCLService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCLService/app/FCUBSCLService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCoreentitiesService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCoreentitiesService/app/FCUBSCoreentitiesService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCoreService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCoreService/app/FCUBSCoreService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCPGServices</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCPGServices/app/FCUBSCPGServices.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSCustomerService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSCustomerService/app/FCUBSCustomerService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSDDService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSDDService/app/FCUBSDDService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSEPSService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSEPSService/app/FCUBSEPSService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSExtPCService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSExtPCService/app/FCUBSExtPCService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSFTService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSFTService/app/FCUBSFTService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSFXService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSFXService/app/FCUBSFXService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSIAService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSIAService/app/FCUBSIAService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSIFService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSIFService/app/FCUBSIFService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSLCService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSLCService/app/FCUBSLCService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSOLService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSOLService/app/FCUBSOLService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSPCService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSPCService/app/FCUBSPCService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSSIService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSSIService/app/FCUBSSIService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSTDFinService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSTDFinService/app/FCUBSTDFinService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSTDService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSTDService/app/FCUBSTDService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSUPService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSUPService/app/FCUBSUPService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBCLLSService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBCLLSService/app/OBCLLSService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBCLSLTService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBCLSLTService/app/OBCLSLTService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTFBCService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFBCService/app/OBTFBCService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTFLCService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFLCService/app/OBTFLCService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTFLCMaintService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFLCMaintService/app/OBTFLCMaintService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTFIFService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFIFService/app/OBTFIFService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTFMSService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFMSService/app/OBTFMSService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTFCSService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFCSService/app/OBTFCSService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSDLService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSDLService/app/FCUBSDLService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>FCUBSSTService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCUBSSTService/app/FCUBSSTService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTRCoreService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTRCoreService/app/OBTRCoreService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTFCoreService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFCoreService/app/OBTFCoreService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>CustomerAccountService</name>
+    <target>rest_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/CustomerAccountService/app/CustomerAccountService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>ConsumerLendingAccountService</name>
+    <target>rest_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/ConsumerLendingAccountService/app/ConsumerLendingAccountService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OLLoanContractService</name>
+    <target>rest_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OLLoanContractService/app/OLLoanContractService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>Gw_RestEJB</name>
+    <target>rest_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/Gw_RestEJB/app/Gw_RestEJB.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>OBTFEPSService</name>
+    <target>gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFEPSService/app/OBTFEPSService.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>NpciServerEar</name>
+    <target>integrated_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/NpciServerEar.ear/app/NpciServerEar.ear</source-path>
+    <deployment-order>100</deployment-order>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <library>
+    <name>jax-rs#2.0@2.22.4.0</name>
+    <target>gateway_server,integrated_server,obpmserver</target>
+    <module-type>war</module-type>
+    <source-path>/scratch/gsh/oracle/wlserver/common/deployable-libraries/jax-rs-2.0.war</source-path>
+    <deployment-order>100</deployment-order>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <library>
+    <name>FCJExtPricing#1.0@1.0</name>
+    <target>integrated_server,gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/FCJExtPricing/1.0@1.0/app/FCJExtPricing.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <library>
+    <name>OBTRExtAdapter#1.0@1.0</name>
+    <target>integrated_server,gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTRExtAdapter/1.0@1.0/app/OBTRExtAdapter.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <library>
+    <name>OBTRExtPricing#1.0@1.0</name>
+    <target>integrated_server,gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTRExtPricing/1.0@1.0/app/OBTRExtPricing.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <library>
+    <name>OBTFExtAdapter#1.0@1.0</name>
+    <target>integrated_server,gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFExtAdapter/1.0@1.0/app/OBTFExtAdapter.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <library>
+    <name>OBTFExtPricing#1.0@1.0</name>
+    <target>integrated_server,gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBTFExtPricing/1.0@1.0/app/OBTFExtPricing.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <library>
+    <name>ExtAdapter#1.0@1.0</name>
+    <target>gateway_server,integrated_server,rest_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/ExtAdapter/1.0@1.0/app/ExtAdapter.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <library>
+    <name>OBCLExtAdapter#1.0@1.0</name>
+    <target>integrated_server,gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/OBCLExtAdapter/1.0@1.0/app/OBCLExtAdapter.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <library>
+    <name>ELCMExtPricing#1.0@1.0</name>
+    <target>integrated_server,gateway_server</target>
+    <module-type>ear</module-type>
+    <source-path>servers/AdminServer/upload/ELCMExtPricing/1.0@1.0/app/ELCMExtPricing.ear</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <staging-mode xsi:nil="true"></staging-mode>
+    <plan-staging-mode xsi:nil="true"></plan-staging-mode>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </library>
+  <machine>
+    <name>Machine-1</name>
+    <node-manager>
+      <nm-type>SSL</nm-type>
+      <listen-address>fcubs.oracle.com</listen-address>
+      <listen-port>5556</listen-port>
+      <debug-enabled>false</debug-enabled>
+    </node-manager>
+  </machine>
+  <jms-server>
+    <name>IntegratedJMSServer</name>
+    <target>integrated_server</target>
+    <persistent-store>IntegratedFileStore</persistent-store>
+  </jms-server>
+  <jms-server>
+    <name>OBPMJMSServer</name>
+    <target>obpmserver</target>
+    <persistent-store>OBPMFileStore</persistent-store>
+  </jms-server>
+  <web-app-container>
+    <relogin-enabled>false</relogin-enabled>
+    <allow-all-roles>false</allow-all-roles>
+    <filter-dispatched-requests-enabled>false</filter-dispatched-requests-enabled>
+    <overload-protection-enabled>false</overload-protection-enabled>
+    <x-powered-by-header-level>NONE</x-powered-by-header-level>
+    <mime-mapping-file>./config/mimemappings.properties</mime-mapping-file>
+    <optimistic-serialization>false</optimistic-serialization>
+    <rtexprvalue-jsp-param-name>false</rtexprvalue-jsp-param-name>
+    <client-cert-proxy-enabled>false</client-cert-proxy-enabled>
+    <http-trace-support-enabled>false</http-trace-support-enabled>
+    <weblogic-plugin-enabled>false</weblogic-plugin-enabled>
+    <auth-cookie-enabled>true</auth-cookie-enabled>
+    <wap-enabled>false</wap-enabled>
+    <post-timeout-secs>30</post-timeout-secs>
+    <max-post-time-secs>-1</max-post-time-secs>
+    <max-post-size>-1</max-post-size>
+    <work-context-propagation-enabled>true</work-context-propagation-enabled>
+    <jsp-compiler-backwards-compatible>true</jsp-compiler-backwards-compatible>
+    <show-archived-real-path-enabled>true</show-archived-real-path-enabled>
+    <change-session-id-on-authentication>true</change-session-id-on-authentication>
+    <gzip-compression>
+      <gzip-compression-enabled>false</gzip-compression-enabled>
+      <gzip-compression-min-content-length>2048</gzip-compression-min-content-length>
+      <gzip-compression-content-type>text/html</gzip-compression-content-type>
+      <gzip-compression-content-type>text/xml</gzip-compression-content-type>
+      <gzip-compression-content-type>text/plain</gzip-compression-content-type>
+    </gzip-compression>
+  </web-app-container>
+  <file-store>
+    <name>IntegratedFileStore</name>
+    <target>integrated_server</target>
+  </file-store>
+  <file-store>
+    <name>OBPMFileStore</name>
+    <target>obpmserver</target>
+  </file-store>
+  <jms-system-resource>
+    <name>IntegratedSystemModule</name>
+    <target>integrated_server</target>
+    <sub-deployment>
+      <name>IntegratedSubdeployment</name>
+      <target>IntegratedJMSServer</target>
+    </sub-deployment>
+    <descriptor-file-name>jms/integratedsystemmodule-jms.xml</descriptor-file-name>
+  </jms-system-resource>
+  <jms-system-resource>
+    <name>OBPMSystemModule</name>
+    <target>obpmserver</target>
+    <sub-deployment>
+      <name>OBPMSD</name>
+      <target>OBPMJMSServer</target>
+    </sub-deployment>
+    <descriptor-file-name>jms/obpmsystemmodule-jms.xml</descriptor-file-name>
+  </jms-system-resource>
+  <admin-server-name>AdminServer</admin-server-name>
+  <jdbc-system-resource>
+    <name>jdbc/fcjdevDS</name>
+    <target>gateway_server,integrated_server,obpmserver,rest_server</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjdevDS-9467-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjSchedulerDS</name>
+    <target>gateway_server,integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjSchedulerDS-6833-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjdevDS_XA</name>
+    <target>gateway_server,integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjdevDS_XA-0669-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjdevDS_ASYNC</name>
+    <target>integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjdevDS_ASYNC-6792-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>FLEXTEST.WORLD</name>
+    <target>gateway_server,obpmserver</target>
+    <descriptor-file-name>jdbc/FLEXTEST2eWORLD-1247-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjdevDS_GTXN</name>
+    <target>integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjdevDS_GTXN-7273-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjdevDS_EL</name>
+    <target>integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjdevDS_EL-0091-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>FLEXTEST.MDB</name>
+    <target>gateway_server,integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/FLEXTEST2eMDB-9656-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcelcmDS</name>
+    <target>integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/jdbc2ffcelcmDS-6351-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjdevDSBranch</name>
+    <target>integrated_server</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjdevDSBranch-1885-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjdevDSSMS</name>
+    <target>gateway_server,integrated_server,obpmserver,rest_server</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjdevDSSMS-8814-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjDevXADS</name>
+    <target>integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjDevXADS-7492-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjpmDS</name>
+    <target>integrated_server</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjpmDS-1925-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjsmsDS</name>
+    <target>integrated_server</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjsmsDS-7727-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjpmDS_GTXN</name>
+    <target>integrated_server</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjpmDS_GTXN-9747-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/ODT14_4</name>
+    <target>gateway_server,integrated_server</target>
+    <descriptor-file-name>jdbc/jdbc2fODT14_4-1795-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/INT144_integrated144</name>
+    <target>gateway_server,integrated_server</target>
+    <descriptor-file-name>jdbc/jdbc2fINT144_integrated144-0549-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <jdbc-system-resource>
+    <name>jdbc/fcjdevDSSMS_XA</name>
+    <target>integrated_server,obpmserver</target>
+    <descriptor-file-name>jdbc/jdbc2ffcjdevDSSMS_XA-5306-jdbc.xml</descriptor-file-name>
+  </jdbc-system-resource>
+  <internal-apps-deploy-on-demand-enabled>true</internal-apps-deploy-on-demand-enabled>
+</domain>

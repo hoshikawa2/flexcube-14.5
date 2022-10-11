@@ -1,0 +1,43 @@
+#  Prepare for kubectl from OCI CLI
+mkdir -p $HOME/.kube
+oci ce cluster create-kubeconfig --cluster-id ocid1.cluster.oc1.iad.aaaaaaaaae3tmyldgbtgmyjrmyzdeytbhazdmmbrgfstmntdgc2wmzrxgbrt --file $HOME/.kube/config --region us-ashburn-1 --token-version 2.0.0
+export KUBECONFIG=$HOME/.kube/config
+# Deploy integrated144
+kubectl config view
+kubectl get nodes
+kubectl replace -f integrated144.yaml --force
+kubectl rollout status deployment integrated144-deployment
+# Set Variables
+export JDBCString=$JDBCString
+export JDBCPassword=$JDBCPassword
+# Install tar
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "yum install tar -y"
+# Copy files to automation
+touch domainsDetails.properties
+echo "ds.jdbc.new.1=$JDBCString" > domainsDetails.properties
+echo "ds.password.new.1=$JDBCPassword" >> domainsDetails.properties
+kubectl cp domainsDetails.properties $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp ChangeJDBC.py $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp ChangeJDBC.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp ExecuteWebLogic.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp StartApps.py $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp StartApps.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp ShutdownAdminServer.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp ShutdownAdminServer.py $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp ExecuteWebLogicOnly.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp JDBCReplace.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp JDBCList $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp flexcube.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+# Load Kernel144 to Image
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "exec 1>/dev/null; sh /flexcube.sh"
+# Transfer config.xml of Weblogic
+kubectl cp config.xml $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/scratch/gsh/kernel144/user_projects/domains/integrated/config/config.xml
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "chown gsh:gsh /scratch/gsh/kernel144/user_projects/domains/integrated/config/config.xml"
+# Change JDBC configuration
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /JDBCReplace.sh /JDBCList $JDBCString $JDBCPassword"
+# Run Weblogic
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /ExecuteWebLogic.sh"
+sleep 180
+# Start Apps
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /StartApps.sh"
+kubectl get pods

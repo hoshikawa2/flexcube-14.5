@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jdbc-data-source xmlns="http://xmlns.oracle.com/weblogic/jdbc-data-source" xmlns:sec="http://xmlns.oracle.com/weblogic/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wls="http://xmlns.oracle.com/weblogic/security/wls" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/jdbc-data-source http://xmlns.oracle.com/weblogic/jdbc-data-source/1.5/jdbc-data-source.xsd">
+  <name>jdbc/fcjdevDSBranch</name>
+  <datasource-type>GENERIC</datasource-type>
+  <jdbc-driver-params>
+    <url>jdbc:oracle:thin:@132.145.191.118:1521/DB0401_iad15g.subnet04010815.vcn04010815.oraclevcn.com</url>
+    <driver-name>oracle.jdbc.xa.client.OracleXADataSource</driver-name>
+    <properties>
+      <property>
+        <name>user</name>
+        <value>integrated144</value>
+      </property>
+    </properties>
+    <password-encrypted>{AES256}VJVf4Y2vas9v2r28jJHmfT/QLSZL4MSds+iTp/oUNhU=</password-encrypted>
+  </jdbc-driver-params>
+  <jdbc-connection-pool-params>
+    <test-table-name>SQL ISVALID</test-table-name>
+  </jdbc-connection-pool-params>
+  <jdbc-data-source-params>
+    <jndi-name>jdbc/fcjdevDSBranch</jndi-name>
+    <global-transactions-protocol>TwoPhaseCommit</global-transactions-protocol>
+  </jdbc-data-source-params>
+</jdbc-data-source>
+

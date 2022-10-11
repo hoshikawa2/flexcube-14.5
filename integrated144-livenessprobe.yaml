@@ -1,0 +1,22 @@
+# YAML example
+# liveness-pod-integrated144.yaml
+#
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: liveness-command-exec 
+spec: 
+  containers: 
+  - name: integrated144
+    image: iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
+    livenessProbe:
+      httpGet:
+        path: /console
+        port: 7001
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      exec:
+        command:
+        - cd /
+        - wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh
+        - sh initializeConfig.sh jdbc:oracle:thin:@0.0.0.0:1521/DB0401_iad15g.subnet00000015.vcn000000005.oraclevcn.com {AES256}7kfaltdxxxxxxxxxxxxxxxxxxxxxxxxxLOynq1ee8Ib8=

@@ -1,0 +1,148 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integrated144-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: integrated144
+  template:
+    metadata:
+      labels:
+        app: integrated144
+    spec:
+      hostname: integrated144
+      hostAliases:
+      - ip: "127.0.0.1"
+        hostnames:
+        - "fcubs.oracle.com"
+      containers:
+      - name: integrated144
+        image: iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
+        env:
+        - name: JDBCSTRING
+          value: "--JDBCString--"
+        - name: JDBCPASSWORD
+          value: "--JDBCPassword--"
+        command: [ "/bin/sh", "-c"]
+        args:
+          [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh $(JDBCSTRING) $(JDBCPASSWORD); while true; do sleep 30; done;" ]
+        ports:
+        - name: port7001
+          containerPort: 7001
+        - name: port7002
+          containerPort: 7002
+        - name: port7003
+          containerPort: 7003
+        - name: port7004
+          containerPort: 7004
+        - name: port7005
+          containerPort: 7005
+        - name: port7006
+          containerPort: 7006
+        - name: port7007
+          containerPort: 7007
+        - name: port7008
+          containerPort: 7008
+        - name: port7009
+          containerPort: 7009
+        - name: port7010
+          containerPort: 7010
+        - name: port7011
+          containerPort: 7011
+        - name: port7012
+          containerPort: 7012
+        - name: port7013
+          containerPort: 7013
+        - name: port7014
+          containerPort: 7014
+        - name: port7015
+          containerPort: 7015
+        - name: port7016
+          containerPort: 7016
+        - name: port7017
+          containerPort: 7017
+        - name: port7018
+          containerPort: 7018
+        - name: port7019
+          containerPort: 7019
+        - name: port7020
+          containerPort: 7020
+        - name: port5556
+          containerPort: 5556
+        livenessProbe:
+          httpGet:
+            path: /console
+            port: 7001
+          initialDelaySeconds: 3000
+          timeoutSeconds: 30
+          periodSeconds: 300
+          failureThreshold: 3
+        resources:
+          requests:
+            cpu: "5"
+            memory: "40Gi"
+          limits:
+            cpu: "5"
+            memory: "40Gi"
+      restartPolicy: Always
+      imagePullSecrets:
+      # enter the name of the secret you created
+      - name: ocirsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: integrated144-service
+  labels:
+    app: integrated144
+spec:
+  selector:
+    app: integrated144
+  ports:
+    - port: 7004
+      targetPort: 7004
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: integrated144-service-weblogic
+  labels:
+    app: integrated144
+spec:
+  selector:
+    app: integrated144
+  ports:
+    - port: 7001
+      targetPort: 7001
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: integrated144-webservices
+  labels:
+    app: integrated144
+spec:
+  selector:
+    app: integrated144
+  ports:
+    - port: 7005
+      targetPort: 7005
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: integrated144-webservices2
+  labels:
+    app: integrated144
+spec:
+  selector:
+    app: integrated144
+  ports:
+    - port: 7009
+      targetPort: 7009
+  type: LoadBalancer
