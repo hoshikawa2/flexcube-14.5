@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Flexcube-Package">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Flexcube-Package.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
