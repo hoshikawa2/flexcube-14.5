@@ -215,9 +215,9 @@ Now you can delete your Weblogic Admin Server. You need to delete it because of 
 
     kubectl delete -f weblogic.yaml
 
-## Task 3: Execute a manual deployment (Simple Way)
+## Task 3: Execute a manual deployment with kubectl
 ___
-This is the simplest way to deploy the Flexcube (fcubs) in your OKE Cluster. You will run a YAML file direct in your OKE Cluster.
+You can deploy the Flexcube (fcubs) in your OKE Cluster with the **kubectl** command.
 It can be done in your local machine if you have configured the access to the OKE Cluster for kubectl command tool.
 
 ### Let's understand the integrated145.yaml File
