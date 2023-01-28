@@ -43,6 +43,7 @@ This document will show how to:
         * Use of setWLSEnv.sh
     * Kubernetes basic administration
     * Visual Builder or Jenkins Operation
+    * Flexcube Administration and Configuration
 
 ## Task 1: Create a Weblogic Admin Server
 ___
