@@ -439,6 +439,10 @@ Uncomment this lines if you want to activate a check in your container:
     #          timeoutSeconds: 30
     #          periodSeconds: 300
     #          failureThreshold: 3
+    .
+    .
+    .
+    #      restartPolicy: Always
 
 ### Let's understand some script files
 
