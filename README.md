@@ -11,7 +11,7 @@ An application installer does the initial steps. The process is repeatable but i
 The first 7 steps listed before could be completely automated using containers, such as docker images and a combination of tools to maintain and manage that. The data configured in the database becomes a replicable seed artifact and the application layer is transformed into an image already tuned and stored as a master
 copy. Oracle Cloud Infrastructure then provides elements to replicate anytime a full environment based on that master copy of the system.
 
-> **Note**: Could the database or potentially different data stores also be in independent containers? Potentially yes, but it was decided to keep it as a regular cloud database deployment with all data store into the same schema and preserve any existing common practice at the database level. The intention of this exercise is not transforming this architecture into a microservices based architecture because that would require other structural changes which are not part of the scope. More information on Oracle database on docker is available at the Oracle’s github (https://github.com/oracle/docker-images/tree/main/OracleDatabase).
+> **Note**: Could the database or potentially different data stores also be in independent containers? Potentially yes, but it was decided to keep it as a regular cloud database deployment with all data store into the same schema and preserve any existing common practice at the database level. The intention of this exercise is not transforming this architecture into a microservices based architecture because that would require other structural changes which are not part of the scope. More information on Oracle database on docker is available at the [Oracle’s github](https://github.com/oracle/docker-images/tree/main/OracleDatabase).
 
 ___
 ### Objectives
@@ -45,6 +45,14 @@ This document will show how to:
     * Visual Builder or Jenkins Operation
     * Flexcube Administration and Configuration
 
+See this Tutorial to create an OKE Cluster in your OCI Tenant:
+[Create your OKE Cluster](https://docs.oracle.com/en/solutions/build-rest-java-application-with-oke/configure-your-kubernetes-cluster-oracle-cloud1.html#GUID-9C7B9B7F-AC65-424E-9ED7-34A0606475A0)
+
+If you already have created the OKE Cluster, please verify if you configured the Access to the Cluster on "Download the Kubeconfig File" topic.
+
+
+Instructions for install **kubectl** if you not have it in your local machine: [Install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+
 ## Task 1: Create a Weblogic Admin Server
 ___
 Let's begin with a simple Weblogic Admin Server POD in your Kubernetes Cluster.
@@ -55,7 +63,7 @@ In the /files/weblogic folder you can find:
 - secret.sh: A bash script that helps you to create the secret to access the Oracle Image Repository to use the Weblogic image
 - weblogic.yaml: The YAML file to create an instance of Weblogic and the Service ports to access the admin server
 
-> **Note**: You need to assign the Oracle Image Repository and set your credentials (user/password) to obtain the Weblogic Image. You can follow this link to do this: https://oracle.github.io/weblogic-kubernetes-operator/2.6/userguide/managing-domains/domain-in-image/base-images/#obtaining-standard-images-from-the-oracle-container-registry
+> **Note**: You need to assign the Oracle Image Repository and set your credentials (user/password) to obtain the Weblogic Image. You can follow this link to do this: [Oracle Image Repository](https://oracle.github.io/weblogic-kubernetes-operator/2.6/userguide/managing-domains/domain-in-image/base-images/#obtaining-standard-images-from-the-oracle-container-registry)
 
 With your credentials in Oracle Image Repository (login/password), you need to edit the **secret.sh** and put your credentials in the file.
 Execute this command to provide the secret in your OKE Cluster. You cannot deploy **Weblogic** Container without this step.
@@ -230,12 +238,6 @@ Now you can delete your Weblogic Admin Server. You need to delete it because of 
 ___
 You can deploy the Flexcube (fcubs) in your OKE Cluster with the **kubectl** command.
 It can be done in your local machine if you have configured the access to the OKE Cluster for kubectl command tool.
-
-See this Tutorial to create an OKE Cluster in your OCI Tenant.
-
-    https://docs.oracle.com/en/solutions/build-rest-java-application-with-oke/configure-your-kubernetes-cluster-oracle-cloud1.html#GUID-932C716F-0C1F-4178-A9EF-1A1B37B3D6DF
-
-If you already have created the OKE Cluster, please see if you configured the Access to the Cluster on "Download the Kubeconfig File" topic.
 
 ### Let's understand the integrated145.yaml File
 
@@ -651,7 +653,10 @@ To delete the deployment, just execute this command on your terminal:
 ## Related Links
 ____
 ### Configure a  Kubernetes Cluster on Oracle Cloud
-https://docs.oracle.com/pt-br/solutions/build-rest-java-application-with-oke/configure-your-kubernetes-cluster-oracle-cloud1.html#GUID-9C7B9B7F-AC65-424E-9ED7-34A0606475A0
+https://docs.oracle.com/en/solutions/build-rest-java-application-with-oke/configure-your-kubernetes-cluster-oracle-cloud1.html#GUID-9C7B9B7F-AC65-424E-9ED7-34A0606475A0
+
+### Install kubectl
+https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 
 ### Building WebLogic Server Images on Docker
 https://docs.oracle.com/middleware/1213/wls/DOCKR/configuration.htm#DOCKR121
