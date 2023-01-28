@@ -1,6 +1,6 @@
 # Deploy Flexcube on OCI OKE with ORACLE VISUAL BUILDER STUDIO
 ___
-###Introduction
+### Introduction
 ___
 Oracle FLEXCUBE Universal Banking requires several steps to be performed before having an environment up and running. Being a Java Enterprise Edition (JEE) application, it includes a minimal software base to be installed, such as database and application server. For this example, Oracle Weblogic and Oracle Database are used as part of the technical stack. To enable a full up and running system, a standard deployment would follow these steps:
 
@@ -14,7 +14,7 @@ copy. Oracle Cloud Infrastructure then provides elements to replicate anytime a 
 > **Note**: Could the database or potentially different data stores also be in independent containers? Potentially yes, but it was decided to keep it as a regular cloud database deployment with all data store into the same schema and preserve any existing common practice at the database level. The intention of this exercise is not transforming this architecture into a microservices based architecture because that would require other structural changes which are not part of the scope. More information on Oracle database on docker is available at the Oracle’s github (https://github.com/oracle/docker-images/tree/main/OracleDatabase).
 
 ___
-###Objectives
+### Objectives
 
 This document will show how to:
 
@@ -22,7 +22,7 @@ This document will show how to:
 * Create a Container Flexcube Image
 * Create a DevOps build and deploy Flexcube inside a Kubernetes Cluster
 
-###Prerequisites
+### Prerequisites
 
 * An OKE Cluster created
     * A worker-node with at least
@@ -44,7 +44,7 @@ This document will show how to:
     * Kubernetes basic administration
     * Visual Builder or Jenkins Operation
 
-##Task 1: Create a Weblogic Admin Server
+## Task 1: Create a Weblogic Admin Server
 ___
 Let's begin with a simple Weblogic Admin Server POD in your Kubernetes Cluster.
 
@@ -163,9 +163,9 @@ You can see now the admin server. The user and password, as defined in your YAML
     user: weblogic
     password: weblogic123
 
-##Task 2: Obtain the database password in AES256 format
+## Task 2: Obtain the database password in AES256 format
 
-###Check the Flexcube Database Backup
+### Check the Flexcube Database Backup
 
 Remember that you need the Oracle Database in the OCI DBaaS and restore your Flexcube backup.
 After checking the restoration of a valid Flexcube database backup, you need this information to access the Flexcube database content:
@@ -215,12 +215,12 @@ Now you can delete your Weblogic Admin Server. You need to delete it because of 
 
     kubectl delete -f weblogic.yaml
 
-##Task 3: Execute a manual deployment (Simple Way)
+## Task 3: Execute a manual deployment (Simple Way)
 ___
 This is the simplest way to deploy the Flexcube (fcubs) in your OKE Cluster. You will run a YAML file direct in your OKE Cluster.
 It can be done in your local machine if you have configured the access to the OKE Cluster for kubectl command tool.
 
-###Let's understand the integrated145.yaml File
+### Let's understand the integrated145.yaml File
 
 The yaml file contains a few important parameters to create the pod. Includes deployment name, recognize the internal IP/hostname, where to pick the image from Weblogic, the jdbc connection and the encrypted database access.
 ![yaml1.png](./images/yaml1.png?raw=true)
@@ -418,7 +418,7 @@ This is the **integrated145.yaml** file:
       type: LoadBalancer
 
 
-###Let's understand some script files
+### Let's understand some script files
 
 Some files are keys for:
 
@@ -428,7 +428,7 @@ Some files are keys for:
 
 Now, let's describe this files:
 
-####Flexcube-Package.zip
+#### Flexcube-Package.zip
 
 This Package is a zip file. It contains all the scripts necessary to configure and run the Flexcube instance. The content of this package is in /files/scripts/ folder. This package contains:
 
@@ -452,7 +452,7 @@ This Package is a zip file. It contains all the scripts necessary to configure a
 
 >**Note**: The /files/extra-scripts contains some more scripts that will be usefull for additional tasks. It's not part of the core of this tutorial.
 
-###Prepare the YAML File
+### Prepare the YAML File
 
 In this step, you need to configure the YAML file integrated145.yaml.
 This YAML file is responsible to deploy the application, the access to the application through a load-balancer and create a storage to persistence.
@@ -474,7 +474,7 @@ Go with your cursor forward until find this location:
 
 You need to change the {AES256} with your password generated in the previous step.
 
-###Execute the integrated145.yaml File
+### Execute the integrated145.yaml File
 
 After everything is configured, execute the YAML file:
 
@@ -507,11 +507,11 @@ After the IPs are visible. You can test your application. Open your browser and 
     http://<integrated145-webservices>:7005/FCUBSAccService/FCUBSAccService?WSDL
     http://<integrated145-webservices>:7009
 
-##Task 4: Automatize the Deployment of Flexcube
+## Task 4: Automatize the Deployment of Flexcube
 
 Let's do this task with a **Visual Builder Studio**. This tool is part of the **OCI** and is similar with **Jenkins**. So, if you use **Jenkins**, you can configure CI/CD with minor adjusts.
 
-###Create Variables in Pipeline
+### Create Variables in Pipeline
 
 You need to create 2 variables:
 
@@ -524,7 +524,7 @@ You need to create 2 variables:
 In Visual Builder, you can create the variables like this:
 ![vbst-config-parameters.png](./images/vbst-config-parameters.png?raw=true)
 
-###Create the Steps in Pipeline
+### Create the Steps in Pipeline
 
 Now you need to create the steps for this pipeline. There are 2 steps:
 
@@ -576,23 +576,23 @@ Again, list the services available with:
     integrated145-webservices            LoadBalancer   10.96.62.106    210.0.30.50      7005:30415/TCP                                                                                                           200d
     integrated145-webservices2           LoadBalancer   10.96.237.22    210.0.30.165     7009:30759/TCP                                                                                                           200d
 
-##Task 5: Delete the Flexcube deployment
+## Task 5: Delete the Flexcube deployment
 
 To delete the deployment, just execute this command on your terminal:
 
     kubectl delete -f integrated145.yaml
 
-##Related Links
+## Related Links
 ____
-###Configure a  Kubernetes Cluster on Oracle Cloud
+### Configure a  Kubernetes Cluster on Oracle Cloud
 https://docs.oracle.com/pt-br/solutions/build-rest-java-application-with-oke/configure-your-kubernetes-cluster-oracle-cloud1.html#GUID-9C7B9B7F-AC65-424E-9ED7-34A0606475A0
 
-###Building WebLogic Server Images on Docker
+### Building WebLogic Server Images on Docker
 https://docs.oracle.com/middleware/1213/wls/DOCKR/configuration.htm#DOCKR121
 
-###Obtaining standard images from the Oracle Container Registry
+### Obtaining standard images from the Oracle Container Registry
 https://oracle.github.io/weblogic-kubernetes-operator/2.6/userguide/managing-domains/domain-in-image/base-images/#obtaining-standard-images-from-the-oracle-container-registry
 
-##Acknowledgements
+## Acknowledgements
 ___
 - **Authors** - Cristiano Hoshikawa (LAD A-Team Solution Engineer), Eduardo Farah (Master Principal Sales Consultant & Banking Architect)
