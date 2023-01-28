@@ -9,7 +9,7 @@ Oracle FLEXCUBE Universal Banking requires several steps to be performed before 
 An application installer does the initial steps. The process is repeatable but it’s also time consuming which means that, depending on the complexity of the environment to be created, it may take several days to stand up the system. One way of improving this process is to automate most of it and that is where containerization strategies can benefit these types of architectures.
 
 The first 7 steps listed before could be completely automated using containers, such as docker images and a combination of tools to maintain and manage that. The data configured in the database becomes a replicable seed artifact and the application layer is transformed into an image already tuned and stored as a master
-copy. Oracle Cloud Infrastructure then provides elements to replicate anytime a full environment based on that master copy of the system. 
+copy. Oracle Cloud Infrastructure then provides elements to replicate anytime a full environment based on that master copy of the system.
 
 > **Note**: Could the database or potentially different data stores also be in independent containers? Potentially yes, but it was decided to keep it as a regular cloud database deployment with all data store into the same schema and preserve any existing common practice at the database level. The intention of this exercise is not transforming this architecture into a microservices based architecture because that would require other structural changes which are not part of the scope. More information on Oracle database on docker is available at the Oracle’s github (https://github.com/oracle/docker-images/tree/main/OracleDatabase).
 
@@ -26,25 +26,25 @@ This document will show how to:
 
 * An OKE Cluster created
   * A worker-node with at least
-     * 8 OCPUs
-     * 64GB RAM
+    * 8 OCPUs
+    * 64GB RAM
 * kubectl access to OKE Cluster for local operations
 * A Flexcube Database backup in OCI Database (DBaaS)
 * OKE VCN needs to access the DBaaS
 * Permission and limit usage to create:
-    * Load-Balancers
-    * Block Volume Storage
-* JDBC configuration for your Flexcube backup 
-    * username
-    * password
-    * Oracle Database Endpoint (IP/Port)
+  * Load-Balancers
+  * Block Volume Storage
+* JDBC configuration for your Flexcube backup
+  * username
+  * password
+  * Oracle Database Endpoint (IP/Port)
 * A knowledge in:
-    * Weblogic Administration and Tools usage
-      * Use of setWLSEnv.sh
-    * Kubernetes basic administration
-    * Visual Builder or Jenkins Operation
-    
-## Task 1: Create a Weblogic Admin Server 
+  * Weblogic Administration and Tools usage
+    * Use of setWLSEnv.sh
+  * Kubernetes basic administration
+  * Visual Builder or Jenkins Operation
+
+## Task 1: Create a Weblogic Admin Server
 ___
 Let's begin with a simple Weblogic Admin Server POD in your Kubernetes Cluster.
 
@@ -219,6 +219,12 @@ Now you can delete your Weblogic Admin Server. You need to delete it because of 
 ___
 You can deploy the Flexcube (fcubs) in your OKE Cluster with the **kubectl** command.
 It can be done in your local machine if you have configured the access to the OKE Cluster for kubectl command tool.
+
+See this Tutorial to create an OKE Cluster in your OCI Tenant.
+
+    https://docs.oracle.com/en/solutions/build-rest-java-application-with-oke/configure-your-kubernetes-cluster-oracle-cloud1.html#GUID-932C716F-0C1F-4178-A9EF-1A1B37B3D6DF
+
+If you already have created the OKE Cluster, please see if you configured the Access to the Cluster on "Download the Kubeconfig File" topic.
 
 ### Let's understand the integrated145.yaml File
 
@@ -442,7 +448,7 @@ This Package is a zip file. It contains all the scripts necessary to configure a
 
 >**JDBCReplace.sh**: This script replaces all the JDBC datasources with the Flexcube database endpoint (IP/Port), flexcube database username and password (AES256 format)
 
->**JDBCList**: This file contains all XML files related with the application datasources. It will be used by **JDBCReplace.sh** 
+>**JDBCList**: This file contains all XML files related with the application datasources. It will be used by **JDBCReplace.sh**
 
 >**ExecuteWebLogic.sh**: Run Weblogic Domain Server, Node Manager and starts applications (with StartApps.sh and StartApps.py)
 
@@ -559,7 +565,7 @@ Put this script in the box:
     kubectl replace -f integrated145-devops.yaml --force
 
 >**Note**: Obtain the OKE OCID in your tenant and put in the line "oci ce cluster...". The **integrated145-devops.yaml** file is similar to the **integrated145.yaml** file, but prepared for the CI/CD.
- 
+
 In the **Visual Builder Studio** you see something like this:
 
 

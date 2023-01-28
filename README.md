@@ -220,6 +220,12 @@ ___
 You can deploy the Flexcube (fcubs) in your OKE Cluster with the **kubectl** command.
 It can be done in your local machine if you have configured the access to the OKE Cluster for kubectl command tool.
 
+See this Tutorial to create an OKE Cluster in your OCI Tenant.
+
+    https://docs.oracle.com/en/solutions/build-rest-java-application-with-oke/configure-your-kubernetes-cluster-oracle-cloud1.html#GUID-932C716F-0C1F-4178-A9EF-1A1B37B3D6DF
+
+If you already have created the OKE Cluster, please see if you configured the Access to the Cluster on "Download the Kubeconfig File" topic.
+
 ### Let's understand the integrated145.yaml File
 
 The yaml file contains a few important parameters to create the pod. Includes deployment name, recognize the internal IP/hostname, where to pick the image from Weblogic, the jdbc connection and the encrypted database access.
