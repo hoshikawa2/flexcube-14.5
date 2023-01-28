@@ -158,10 +158,15 @@ With a public IP address, you can call in your browser:
 
     http://<Public IP>:7001/console
 
+![weblogic-admin.png](./images/weblogic-admin.png?raw=true)
+
 You can see now the admin server. The user and password, as defined in your YAML file is:
 
     user: weblogic
     password: weblogic123
+
+![weblogic-machine-1.png](./images/weblogic-machine-1.png?raw=true)
+
 
 ## Task 2: Obtain the database password in AES256 format
 
@@ -197,7 +202,7 @@ Let's use your newer Weblogic Admin Server POD to execute this command. In your 
 
     kubectl exec -it $(kubectl get pod -l app=weblogic -o jsonpath="{.items[0].metadata.name}") -- /bin/bash
 
-Wait until you can enter inside the container of your Weblogic. So, then execute:
+Wait until you can enter inside the container of your Weblogic. Execute this sequence of commands:
 
     cd /u01/oracle/wlserver/server/bin
     .  ./setWLSEnv.sh
@@ -423,6 +428,17 @@ This is the **integrated145.yaml** file:
           targetPort: 7009
       type: LoadBalancer
 
+> **Resilience**: The Flexcube deployment is resilient, so if the Weblogic or Flexcube falls down, the Kubernetes Cluster will load and execute again. The responsible for this is the livenessprobe inside the integrated145.yaml file.
+Uncomment this lines if you want to activate a check in your container:
+
+    #        livenessProbe:
+    #          httpGet:
+    #            path: /console
+    #            port: 7001
+    #          initialDelaySeconds: 3000
+    #          timeoutSeconds: 30
+    #          periodSeconds: 300
+    #          failureThreshold: 3
 
 ### Let's understand some script files
 
@@ -501,17 +517,42 @@ You can see the Load Balancers Public IPs in creation time. Wait until all the P
 
 >**Note**: In the integrated145.yaml file, you can see in the **Service** section, the **annotation** is commented. This annotation creates the load-balancer in private mode and your application will be more secure, but you need to create a bastion to access this applications.
 
+    #  annotations:
+    #    service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+    #    service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+    #    service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1.sa-saopaulo-1.aaaaaaaay4rjx6d5o6nwqehxusgwrig432xzek5dbojxie7lw25fhmzjyrza"
+
+    Replace the subnet1 with your Private Subnet OCID
+    If you choose to use Flexcube in a Private Subnet, create a compute VM as a bastion.
+
+    You can stablish a SSH tunnel to access your endpoints like this:
+    ssh -i PrivateKey.pem -L 7001:<integrated145-service-weblogic Private IP>:7001 opc@<Bastion Public IP>
+    ssh -i PrivateKey.pem -L 7004:<integrated145-service Private IP>:7004 opc@<Bastion Public IP>
+    ssh -i PrivateKey.pem -L 7005:<integrated145-webservices Private IP>:7004 opc@<Bastion Public IP>
+
+    And can access with your local browser:
+    http://localhost:7001/console
+    https://localhost:7004/FCJNeoWeb
+    http://localhost:7005/FCUBSAccService/FCUBSAccService?WSDL
+
 After the IPs are visible. You can test your application. Open your browser and type:
 
     For the Weblogic Admin Server
     http://<integrated145-service-weblogic IP>:7001/console
 
     For the REST Service
-    http://<integrated145-service IP>:7004/FCJNeoWeb
+    https://<integrated145-service IP>:7004/FCJNeoWeb
 
     For the SOAP Service
     http://<integrated145-webservices>:7005/FCUBSAccService/FCUBSAccService?WSDL
     http://<integrated145-webservices>:7009
+
+Flexcube Application on Port 7004
+![flexcube-interface](./images/flexcube-interface.png?raw=true)
+
+SOAP Service on Port 7005
+![soap-service](./images/soap-service.png?raw=true)
+
 
 ## Task 4: Automatize the Deployment of Flexcube
 
