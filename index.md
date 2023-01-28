@@ -57,7 +57,12 @@ In the /files/weblogic folder you can find:
 
 > **Note**: You need to assign the Oracle Image Repository and set your credentials (user/password) to obtain the Weblogic Image. You can follow this link to do this: https://oracle.github.io/weblogic-kubernetes-operator/2.6/userguide/managing-domains/domain-in-image/base-images/#obtaining-standard-images-from-the-oracle-container-registry
 
+With your credentials in Oracle Image Repository (login/password), you need to edit the **secret.sh** and put your credentials in the file.
+Execute this command to provide the secret in your OKE Cluster. You cannot deploy **Weblogic** Container without this step.
 
+    sh secret.sh
+
+Now, we can proceed with the **Weblogic** deployment. You can adjust many parameters, but for this test, maintain the Port 7001 and the credentials to log-in on the Weblogic Admin Server.
 
 **weblogic.yaml**
 
