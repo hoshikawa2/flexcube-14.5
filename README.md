@@ -568,6 +568,15 @@ SOAP Service on Port 7005
 
 Let's do this task with a **Visual Builder Studio**. This tool is part of the **OCI** and is similar with **Jenkins**. So, if you use **Jenkins**, you can configure CI/CD with minor adjusts.
 
+### Create your Appointment for the Flexcube Git Project
+
+You need to configure the Flexcube git project in your **Visual Builder Studio** (or Jenkins) configuration:
+
+    https://github.com/hoshikawa2/flexcube-14.5
+
+![vbst-git-config.png](./images/vbst-git-config.png?raw=true)
+
+
 ### Create Variables in Pipeline
 
 You need to create 2 variables:
@@ -609,11 +618,11 @@ Put this script in the box:
     export JDBCString=$JDBCString
     export JDBCPassword=$JDBCPassword
     # setup the JDBC variables in integrated145-devops.yaml
-    sed -i "s~--JDBCString--~$JDBCString~g" integrated145-devops.yaml
-    sed -i "s~--JDBCPassword--~$JDBCPassword~g" integrated145-devops.yaml
+    sed -i "s~--JDBCString--~$JDBCString~g" ./files/scripts/integrated145-devops.yaml
+    sed -i "s~--JDBCPassword--~$JDBCPassword~g" ./files/scripts/integrated145-devops.yaml
     # Deploy integrated145
     kubectl config view
-    kubectl replace -f integrated145-devops.yaml --force
+    kubectl replace -f ./files/scripts/integrated145-devops.yaml --force
 
 >**Note**: Obtain the OKE OCID in your tenant and put in the line "oci ce cluster...". The **integrated145-devops.yaml** file is similar to the **integrated145.yaml** file, but prepared for the CI/CD.
 
