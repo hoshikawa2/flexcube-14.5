@@ -63,80 +63,80 @@ In the /files/weblogic folder you can find:
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-    name: weblogic-deployment
+      name: weblogic-deployment
     spec:
-    replicas: 1
-    selector:
-    matchLabels:
-    app: weblogic
-    template:
-    metadata:
-    labels:
-    app: weblogic
-    spec:
-    containers:
-    - name: weblogic
-    image: container-registry.oracle.com/middleware/weblogic:12.2.1.4
-    env:
-    - name: DOMAIN_NAME
-    value: "myDomain"
-    - name: ADMIN_NAME
-    value:  "myadmin"
-    - name: ADMIN_LISTEN_PORT
-    value: "7001"
-    - name: ADMIN_HOST
-    value: "AdminContainer"
-    - name: ADMINISTRATION_PORT_ENABLED
-    value: "false"
-    - name: ADMINISTRATION_PORT
-    value: "9005"
-    - name: MANAGED_SERVER_PORT
-    value: "8001"
-    - name: MANAGED_SERVER_NAME_BASE
-    value: "MS"
-    - name: CONFIGURED_MANAGED_SERVER_COUNT
-    value: "2"
-    - name: CLUSTER_NAME
-    value: "cluster1"
-    - name: CLUSTER_TYPE
-    value: "DYNAMIC"
-    - name: PRODUCTION_MODE
-    value: "dev"
-    - name: DOMAIN_HOST_VOLUME
-    value: "/app/domains"
-    - name: PROPERTIES_FILE_DIR
-    value: "/u01/oracle/properties"
-    - name: PROPERTIES_FILE
-    value: "/u01/oracle/properties/domain.properties"
-    command: [ "/bin/bash", "-c", "--" ]
-    args: [ "mkdir /u01/oracle/properties; cd /u01/oracle/properties; echo 'username=weblogic' > domain.properties; echo 'password=weblogic123' >> domain.properties; cd /u01/oracle; ./createAndStartEmptyDomain.sh; while true; do sleep 30;
+      replicas: 1
+      selector:
+        matchLabels:
+          app: weblogic
+      template:
+        metadata:
+          labels:
+            app: weblogic
+        spec:
+          containers:
+          - name: weblogic
+            image: container-registry.oracle.com/middleware/weblogic:12.2.1.4
+            env:
+            - name: DOMAIN_NAME
+              value: "myDomain"
+            - name: ADMIN_NAME
+              value:  "myadmin"
+            - name: ADMIN_LISTEN_PORT
+              value: "7001"
+            - name: ADMIN_HOST
+              value: "AdminContainer"
+            - name: ADMINISTRATION_PORT_ENABLED
+              value: "false"
+            - name: ADMINISTRATION_PORT
+              value: "9005"
+            - name: MANAGED_SERVER_PORT
+              value: "8001"
+            - name: MANAGED_SERVER_NAME_BASE
+              value: "MS"
+            - name: CONFIGURED_MANAGED_SERVER_COUNT
+              value: "2"
+            - name: CLUSTER_NAME
+              value: "cluster1"
+            - name: CLUSTER_TYPE
+              value: "DYNAMIC"
+            - name: PRODUCTION_MODE
+              value: "dev"
+            - name: DOMAIN_HOST_VOLUME
+              value: "/app/domains"
+            - name: PROPERTIES_FILE_DIR
+              value: "/u01/oracle/properties"
+            - name: PROPERTIES_FILE
+              value: "/u01/oracle/properties/domain.properties"
+            command: [ "/bin/bash", "-c", "--" ]
+            args: [ "mkdir /u01/oracle/properties; cd /u01/oracle/properties; echo 'username=weblogic' > domain.properties; echo 'password=weblogic123' >> domain.properties; cd /u01/oracle; ./createAndStartEmptyDomain.sh; while true; do sleep 30;
     done;" ]
-    ports:
-    - name: port9005
-    containerPort: 9005
-    imagePullSecrets:
-    - name: oracledockersecret
+            ports:
+            - name: port9005
+              containerPort: 9005
+          imagePullSecrets:
+          - name: oracledockersecret
     ---
     apiVersion: v1
     kind: Service
     metadata:
-    name: weblogic-service
-    labels:
-    app: weblogic
+      name: weblogic-service
+      labels:
+        app: weblogic
     spec:
-    selector:
-    app: weblogic
-    ports:
-    - port: 7001
-    targetPort: 7001
-    name: adminserver
-    - port: 8001
-    targetPort: 8001
-    name: managedserver
-    - port: 9005
-    targetPort: 9005
-    name: adminport
-    type: LoadBalancer
+      selector:
+        app: weblogic
+      ports:
+        - port: 7001
+          targetPort: 7001
+          name: adminserver
+        - port: 8001
+          targetPort: 8001
+          name: managedserver
+        - port: 9005
+          targetPort: 9005
+          name: adminport
+      type: LoadBalancer
     ---
 
 In your terminal, you can execute the weblogic.yaml to deploy the admin server.
