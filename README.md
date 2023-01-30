@@ -644,7 +644,22 @@ Again, list the services available with:
     integrated145-webservices            LoadBalancer   10.96.62.106    210.0.30.50      7005:30415/TCP                                                                                                           200d
     integrated145-webservices2           LoadBalancer   10.96.237.22    210.0.30.165     7009:30759/TCP                                                                                                           200d
 
-## Task 5: Delete the Flexcube deployment
+## Task 5: Update tables on Database to configure your Flexcube instance
+
+After Flexcube activated on your Kubernetes Cluster, you need to do some UPDATEs on the database.
+This is the tables you need to change to point to correct endpoints of your Flexcube Instance:
+
+    TableName                     Changes
+    ----------------------------  -----------------------------------------------
+    PMTM_EXT_NOTIF_SYSTEM         -- need to change the REST_URL
+    CSTM_PROP_MASTER              -- need to change the SERVICE_URL
+    IFTM_EXT_PAYSYS_DETAIL        -- need to change the WSDL_URLS for OBLM
+    IFTM_EXTERNAL_SERVICE_DETAILS -- need to change the REST_IP
+    PMTM_EXTERNAL_ACC_SYSTEM      -- need to change the RS_URL for OBVAM
+    PMTM_ECA_SYSTEM               -- need to change for RS_URL for OBVAM
+    STTM_HOST_DSN                 -- Contains Schema details which is used for REPORTS only...so can be ignored
+
+## Task 6: Delete the Flexcube deployment
 
 To delete the deployment, just execute this command on your terminal:
 
