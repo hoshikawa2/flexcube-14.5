@@ -646,7 +646,7 @@ Again, list the services available with:
 
 ## Task 5: Update tables on Database to configure your Flexcube instance
 
-After Flexcube activated on your Kubernetes Cluster, you need to do some UPDATEs on the database.
+After Flexcube has been activated on your Kubernetes Cluster and you need to intgrate with other FSGBU applications, you need to do some UPDATEs on the database.
 This is the tables you need to change to point to correct endpoints of your Flexcube Instance:
 
     TableName                     Changes
