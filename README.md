@@ -659,6 +659,27 @@ This is the tables you need to change to point to correct endpoints of your Flex
     PMTM_ECA_SYSTEM               -- need to change for RS_URL for OBVAM
     STTM_HOST_DSN                 -- Contains Schema details which is used for REPORTS only...so can be ignored
 
+If you change the **hostname** of your configurations, you need to change this tables too:
+
+    TableName                     Changes
+    ----------------------------  -----------------------------------------------
+    CSTM_EXTERNAL_SERVER_DETAILS  -- uses container hostname
+    PMTM_EXCHANGE_RATE_SYSTEM     -- uses container hostname
+    PMTM_FILE_ENV_SYSTEM          -- uses container hostname
+    PMTM_QUEUE_PROFILE            -- uses container hostname
+    PMTM_SANCTION_SYSTEM          -- uses container hostname
+    PROPERTIES                    -- uses container hostname
+    IFTM_TF_EXT_SERVICE_DETAILS	  -- uses container hostname
+    GETH_BLOCK_EXT_SYS_DETAIL     -- uses container hostname
+    GETM_BLOCK_EXT_SYS_DETAIL     -- uses container hostname
+    CSTB_NGUI_REGISTRY            -- uses container hostname
+    IFTM_TF_EXT_PAYSYS_DETAIL     -- uses container hostname
+    IFTM_TR_EXT_SERVICE_DETAILS   -- uses container hostname
+    OLTM_INTEGRATION_DETAILS      -- uses container hostname
+    IFTM_TR_EXT_PAYSYS_DETAIL     -- uses container hostname
+    IFTM_INTEGRATION_DETAILS      -- uses container hostname
+    IFTM_TF_EXT_SERVICE_DETAILS   -- uses container hostname
+
 ## Task 6: Delete the Flexcube deployment
 
 To delete the deployment, just execute this command on your terminal:
